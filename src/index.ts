@@ -1,24 +1,34 @@
 export type EventType = keyof MediaQueryListEventMap;
 
-export const listeners = {};
+export type MediaQueryListener = (this: MediaQueryList, ev: MediaQueryListEvent) => any;
+
+export type Listeners = Record<string, MediaQueryListener>;
+
+export interface ListenersStore {
+  current: Listeners;
+}
+
+const listeners: ListenersStore = {
+  current: {},
+};
 
 function isCorrectEventType(type: EventType) {
   return type === 'change';
 }
 
-export function startMock(mql: Partial<MediaQueryList> = {}) {
+export function startMock(mql: Partial<MediaQueryList> = {}): void {
   Object.defineProperty(window, 'matchMedia', {
     writable: true,
     configurable: true,
     value: (query: string): MediaQueryList => {
       const addListener: MediaQueryList['addListener'] = (listener) => {
-        listeners[query] = listener;
+        listeners.current[query] = listener;
 
         if (mql.addListener) mql.addListener(listener);
       };
 
       const removeListener: MediaQueryList['removeListener'] = (listener) => {
-        delete listeners[query];
+        delete listeners.current[query];
 
         if (mql.removeListener) mql.removeListener(listener);
       };
@@ -26,7 +36,7 @@ export function startMock(mql: Partial<MediaQueryList> = {}) {
       const addEventListener: MediaQueryList['addEventListener'] = (type, listener, options) => {
         if (!isCorrectEventType(type)) return;
 
-        listeners[query] = listener;
+        listeners.current[query] = listener;
 
         if (mql.addEventListener) mql.addEventListener(type, listener, options);
       };
@@ -38,7 +48,7 @@ export function startMock(mql: Partial<MediaQueryList> = {}) {
       ) => {
         if (!isCorrectEventType(type)) return;
 
-        delete listeners[query];
+        delete listeners.current[query];
 
         if (mql.removeEventListener) mql.removeEventListener(type, listener, options);
       };
@@ -62,7 +72,7 @@ export function startMock(mql: Partial<MediaQueryList> = {}) {
   });
 }
 
-export function fireEvent(props: Partial<MediaQueryListEvent>) {
+export function fireEvent(props: Partial<MediaQueryListEvent>): void {
   const { media, type, ...restProps } = props;
   const listener = listeners[media];
 
@@ -77,7 +87,11 @@ export function fireEvent(props: Partial<MediaQueryListEvent>) {
   }
 }
 
-export function cleanup() {
-  listeners = {};
+export function cleanup(): void {
+  listeners.current = {};
   delete window.matchMedia;
+}
+
+export function getListeners(): Listeners {
+  return listeners.current;
 }
