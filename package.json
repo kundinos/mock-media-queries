@@ -1,0 +1,75 @@
+{
+  "name": "@kundinos/mock-media-queries",
+  "version": "0.1.0",
+  "description": "Simplifies testing of code that uses window.matchMedia",
+  "main": "dist/index.js",
+  "module": "dist/index.es.js",
+  "jsnext:main": "dist/index.es.js",
+  "typings": "dist/index.d.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "compile": "rm -rf dist && rollup -c rollup.config.ts",
+    "lint": "eslint --cache src/ --ext '.ts'",
+    "lint:write": "eslint --cache src/ --fix --ext '.ts'",
+    "lint:staged": "lint-staged",
+    "pretty": "prettier --write src/**/*.{ts}",
+    "type-check": "tsc -p tsconfig.json --noEmit",
+    "prepare": "husky install"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kundinos/mock-media-queries.git"
+  },
+  "keywords": [
+    "testing",
+    "matchMedia",
+    "media queries"
+  ],
+  "author": {
+    "name": "Yury Kundin",
+    "email": "yury.kundin@yandex.ru"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/kundinos/mock-media-queries/issues"
+  },
+  "homepage": "https://github.com/kundinos/mock-media-queries#readme",
+  "files": [
+    "dist"
+  ],
+  "lint-staged": {
+    "*.{json,md,yml,ts}": "prettier --write",
+    "*.(ts)": "eslint --cache --fix"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.15.7",
+    "@babel/core": "^7.15.5",
+    "@babel/plugin-transform-runtime": "^7.13.8",
+    "@babel/preset-env": "^7.15.6",
+    "@babel/preset-typescript": "^7.15.0",
+    "@babel/runtime": "^7.15.4",
+    "@types/rollup-plugin-peer-deps-external": "^2.2.0",
+    "@typescript-eslint/eslint-plugin": "^3.7.1",
+    "@typescript-eslint/parser": "^3.7.1",
+    "eslint": "^7.29.0",
+    "eslint-config-airbnb": "^18.2.0",
+    "eslint-config-airbnb-typescript": "^9.0.0",
+    "eslint-config-prettier": "^6.11.0",
+    "eslint-plugin-import": "^2.24.2",
+    "eslint-plugin-prettier": "^3.4.1",
+    "husky": "^7.0.0",
+    "lint-staged": "^11.0.1",
+    "prettier": "^2.0.5",
+    "rollup": "^2.57.0",
+    "rollup-plugin-dts": "^4.0.0",
+    "rollup-plugin-peer-deps-external": "^2.2.4",
+    "rollup-plugin-terser": "^7.0.2",
+    "rollup-plugin-typescript2": "^0.30.0",
+    "ts-node": "^10.2.1",
+    "typescript": "^4.4.3"
+  },
+  "dependencies": {
+    "@rollup/plugin-commonjs": "^21.0.1",
+    "@rollup/plugin-node-resolve": "^13.1.3"
+  }
+}
