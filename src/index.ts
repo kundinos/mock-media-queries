@@ -74,7 +74,7 @@ export function startMock(mql: Partial<MediaQueryList> = {}): void {
 
 export function fireEvent(props: Partial<MediaQueryListEvent>): void {
   const { media, type, ...restProps } = props;
-  const listener = listeners[media];
+  const listener = listeners.current[media];
 
   if (listener) {
     const event: Partial<MediaQueryListEvent> = {
@@ -83,7 +83,7 @@ export function fireEvent(props: Partial<MediaQueryListEvent>): void {
       ...restProps,
     };
 
-    listener(event);
+    listener.call(this, event);
   }
 }
 
