@@ -1,5 +1,4 @@
 #!/bin/sh
 . "$(dirname "$0")/_/husky.sh"
 
-export PATH=/usr/local/bin:$PATH
 npm run lint:staged
