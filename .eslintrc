@@ -20,7 +20,7 @@
     "import/no-extraneous-dependencies": [
       "error",
       {
-        "devDependencies": ["src/**/*.test.ts", "rollup.config.ts"]
+        "devDependencies": ["src/**/*.test.ts", "rollup.config.ts", "jest.config.ts"]
       }
     ]
   }
